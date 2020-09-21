@@ -1,8 +1,46 @@
-﻿@{
+﻿@model FireBaseTest.Models.Student
+@{
     ViewData["Title"] = "Home Page";
 }
 
+@Html.ValidationSummary(true, "", new { @class = "alert-primary" })
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="container">
+    <h3 class="text-center font-weight-bold">Add New Student</h3>
+    <hr />
+    <div class="card shadow-lg">
+        <h5 class="text-center font-weight-bold mt-3">Student</h5>
+        <hr />
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label class="col-form-label" asp-for="Firstname"></label>
+                    <input type="text" class="form-control" asp-for="Firstname" />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" asp-for="Lastname"></label>
+                    <input type="text" class="form-control" asp-for="Lastname" />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" asp-for="Grade"></label>
+                    <input type="text" class="form-control" asp-for="Grade" />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" asp-for="Age"></label>
+                    <input type="text" class="form-control" asp-for="Age" />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" asp-for="OriginSchool"></label>
+                    <input type="text" class="form-control" asp-for="OriginSchool" />
+                </div>
+                <div class="d-inline">
+                    <input type="submit" class="btn btn-success" value="Add One" />
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

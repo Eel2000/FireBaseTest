@@ -6,20 +6,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FireBaseTest.Models;
+using FireBaseTest.Services.Interfaces;
 
 namespace FireBaseTest.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IMainService _mainService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IMainService mainService)
         {
-            _logger = logger;
+            _mainService = mainService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(Student student)
+        {
+            try
+            {
+                _mainService.AddNew(student);
+                ModelState.AddModelError(String.Empty, "Student Added Successfuly");
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError(String.Empty, "Student Not Added 'Cause an Error Occure While Operating");
+            }
+
             return View();
         }
 
