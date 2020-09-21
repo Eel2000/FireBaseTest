@@ -2,6 +2,7 @@
 using FireBaseTest.Services.Interfaces;
 using FireSharp.Config;
 using FireSharp.Interfaces;
+using FireSharp.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,21 @@ namespace FireBaseTest.Services
     public class MainService : IMainService
     {
         public readonly IFirebaseConfig _config;
+        public readonly IFirebaseClient _firebaseClient;
 
         public MainService()
         {
             _config = new FirebaseConfig { AuthSecret = "8JSYGrG7FyQcz27bZlYU3mzMIGy3ylmIAzmbTK8p", BasePath = "https://aspnetcorefirebasetest.firebaseio.com/" };
+            _firebaseClient = new FireSharp.FirebaseClient(_config);
         }
 
         public void AddNew(Student student)
         {
-            throw new NotImplementedException();
+            var data = student;
+            PushResponse response = _firebaseClient.Push("Student/", data);
+            data.Id = response.Result.name;
+
+            SetResponse setResponse = _firebaseClient.Set("Student/" + data.Id, data);
         }
 
         public void Delete(string id)
