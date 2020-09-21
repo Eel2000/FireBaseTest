@@ -1,0 +1,32 @@
+﻿@model IEnumerable<FireBaseTest.Models.Student>
+@{
+    ViewData["Title"] = "List Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Students Available</h1>
+    <p>You will find here list of all student available on our database older and Lastest</p>
+</div>
+<hr />
+
+<div class="card-body">
+    <table class="table table-striped">
+        <tr>
+            <th>FireBase ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Age</th>
+            <th>School</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(e => item.Id)</td>
+                <td>@Html.DisplayFor(e => item.Firstname)</td>
+                <td>@Html.DisplayFor(e => item.Lastname)</td>
+                <td>@Html.DisplayFor(e => item.Age)</td>
+                <td>@Html.DisplayFor(e => item.OriginSchool)</td>
+            </tr>
+        }
+    </table>
+</div>

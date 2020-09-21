@@ -42,6 +42,13 @@ namespace FireBaseTest.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult List()
+        {
+            var students = _mainService.GetAllStudents();
+            return View(students);
+        }
+
         public IActionResult Privacy()
         {
             return View();

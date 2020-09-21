@@ -3,6 +3,8 @@ using FireBaseTest.Services.Interfaces;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +39,46 @@ namespace FireBaseTest.Services
 
         public IEnumerable<Student> GetAllStudents()
         {
-            throw new NotImplementedException();
+            FirebaseResponse firebaseResponse = _firebaseClient.Get("Student");
+
+            dynamic data = JsonConvert.DeserializeObject<dynamic>(firebaseResponse.Body);
+
+            var listOfStudents = new List<Student>();
+
+            foreach (var students in data)
+            {
+                listOfStudents.Add(JsonConvert.DeserializeObject<Student>(((JProperty)students).Value.ToString()));
+            }
+
+            return listOfStudents;
         }
 
         public Student GetStudent(string id)
         {
-            throw new NotImplementedException();
+            FirebaseResponse firebaseResponse = _firebaseClient.Get("Student");
+
+            dynamic data = JsonConvert.DeserializeObject<dynamic>(firebaseResponse.Body);
+
+            var listOfStudents = new List<Student>();
+
+            foreach (var students in data)
+            {
+                listOfStudents.Add(JsonConvert.DeserializeObject<Student>(((JProperty)students).Value.ToString()));
+            }
+
+            var studentFound = new Student();
+
+            foreach (var item in listOfStudents)
+            {
+                if (item.Id == id)
+                    studentFound.Id = item.Id;
+                    studentFound.Firstname = item.Firstname;
+                    studentFound.Lastname = item.Lastname;
+                    studentFound.Grade = item.Grade;
+                    studentFound.Age = item.Age;
+            }
+
+            return studentFound;
         }
     }
 }
