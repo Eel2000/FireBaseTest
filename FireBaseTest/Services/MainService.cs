@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,7 +35,14 @@ namespace FireBaseTest.Services
 
         public void Delete(string id)
         {
-            throw new NotImplementedException();
+            FirebaseResponse firebaseResponse = _firebaseClient.Delete("Student/" + id);
+            Debug.Write(firebaseResponse.Body.ToString());
+        }
+
+        public void Edit(Student student)
+        {
+            SetResponse setResponse = _firebaseClient.Set("Student/" + student.Id, student);
+            Debug.WriteLine(setResponse.Body.ToString());
         }
 
         public IEnumerable<Student> GetAllStudents()
@@ -55,30 +63,11 @@ namespace FireBaseTest.Services
 
         public Student GetStudent(string id)
         {
-            FirebaseResponse firebaseResponse = _firebaseClient.Get("Student");
+            FirebaseResponse firebaseResponse = _firebaseClient.Get("Student/"+id);
 
-            dynamic data = JsonConvert.DeserializeObject<dynamic>(firebaseResponse.Body);
+            Student data = JsonConvert.DeserializeObject<Student>(firebaseResponse.Body);
 
-            var listOfStudents = new List<Student>();
-
-            foreach (var students in data)
-            {
-                listOfStudents.Add(JsonConvert.DeserializeObject<Student>(((JProperty)students).Value.ToString()));
-            }
-
-            var studentFound = new Student();
-
-            foreach (var item in listOfStudents)
-            {
-                if (item.Id == id)
-                    studentFound.Id = item.Id;
-                    studentFound.Firstname = item.Firstname;
-                    studentFound.Lastname = item.Lastname;
-                    studentFound.Grade = item.Grade;
-                    studentFound.Age = item.Age;
-            }
-
-            return studentFound;
+            return (data);
         }
     }
 }

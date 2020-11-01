@@ -12,5 +12,6 @@ namespace FireBaseTest.Services.Interfaces
         IEnumerable<Student> GetAllStudents();
         Student GetStudent(string id);
         void Delete(string id);
+        void Edit(Student student);
     }
 }

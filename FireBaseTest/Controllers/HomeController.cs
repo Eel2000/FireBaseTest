@@ -49,6 +49,36 @@ namespace FireBaseTest.Controllers
             return View(students);
         }
 
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            var student = _mainService.GetStudent(id);
+            return View(student);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            _mainService.Delete(id);
+            ModelState.AddModelError(String.Empty, "Student Deleted Successfully");
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var student = _mainService.GetStudent(id);
+            return View(student);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Student student)
+        {
+            _mainService.Edit(student);
+            return RedirectToAction("List");
+        }
+
         public IActionResult Privacy()
         {
             return View();

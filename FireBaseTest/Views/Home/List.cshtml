@@ -17,6 +17,8 @@
             <th>Lastname</th>
             <th>Age</th>
             <th>School</th>
+            <th>Grade</th>
+            <th>-------</th>
         </tr>
         @foreach (var item in Model)
         {
@@ -26,7 +28,12 @@
                 <td>@Html.DisplayFor(e => item.Lastname)</td>
                 <td>@Html.DisplayFor(e => item.Age)</td>
                 <td>@Html.DisplayFor(e => item.OriginSchool)</td>
+                <td>@Html.DisplayFor(e => item.Grade)</td>
+                <td>
+                    <a asp-route-id="@item.Id" asp-action="Details">Details</a>
+                </td>
             </tr>
         }
     </table>
 </div>
+
